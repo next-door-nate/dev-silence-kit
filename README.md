@@ -1,6 +1,6 @@
-# [Trackstar the DJ](http://djtrackstar.com)
+# [Silence Kit](http://silencekitband.com)
 
-* Website: [http://djtrackstar.com](http://djtrackstar.com)
+* Website: [http://silencekitband.com](http://silencekitband.com)
 * Author : [Nate Vandervis](https://nates.work)
 
 ## Features
@@ -21,6 +21,7 @@
 * JavaScript files enqueued using WordPress functions into wp_head
 
 ### CSS3
+* Sass Compiling
 * HTML5 Boilerplate reset
 * Media Queries framework for instant development using @media
 * @font-face empty framework with Fonts folder setup ready for new custom fonts
