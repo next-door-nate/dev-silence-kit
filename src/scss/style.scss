@@ -13,10 +13,12 @@
 //	Variables
 //------------------------------------
 
-$light: #f1f4f7;
+$white: rgba(255,255,255,1);
+$off-white: rgba(255,255,255,.75);
 $black: #000;
 
-
+$link-transition: all .4s ease-in-out;
+$menu-spacing: 30px;
 
 body{
 	background: $black !important;
@@ -25,6 +27,7 @@ body{
 //------------------------------------
 //  MAIN
 //------------------------------------
+
 
 /* global box-sizing */
 *,
@@ -39,11 +42,12 @@ body{
 
 /* html element 62.5% font-size for REM use */
 html {
-	font-size:62.5%;
+	font-size: 62.5%;
 }
 body {
-	font:300 11px/1.4 'Helvetica Neue', Helvetica, Arial, sans-serif;
-	color:#444;
+	font-family: 'Open Sans', sans-serif;
+	color: $off-white;
+	font-size: 16px;
 }
 /* clear */
 .clear:before,
@@ -63,11 +67,13 @@ img {
 	vertical-align:bottom;
 }
 a {
-	color:#444;
+	color:$off-white;
 	text-decoration:none;
+	transition: $link-transition;
 }
 a:hover {
 	color:#444;
+	cursor: pointer;
 }
 a:focus {
 	outline:0;
@@ -81,36 +87,104 @@ input:focus {
 	border:1px solid #04A4CC;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6{
+	font-family: 'Manuale', serif;
+	font-weight: 500;
+	color: $white;
+	margin-top: 0;
+}
+
+
+h1{
+	font-size: 2.75rem;
+}
+h2{
+	color: $off-white;
+	font-size: 1rem;
+}
+
+
+//------------------------------------*\
+//	Typography
+//------------------------------------*/
+
+
+
 //------------------------------------*\
 //	STRUCTURE
 //------------------------------------*/
 
-/* wrapper */
-.wrapper {
-	max-width:1280px;
-	width:95%;
-	margin:0 auto;
-	position:relative;
-}
 /* header */
 .header {
 
 }
+
 /* logo */
 .logo {
+	width: 180px;
+	height: auto;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	opacity: .75;
 
+	&:hover{
+		opacity: 1;
+	}
 }
 .logo-img {
 
 }
+
 /* nav */
 .nav {
+	font-family: 'Manuale', serif;
+
+	a{
+		color: $off-white;
+		font-size: 28px;
+		position: absolute;
+
+		&:hover{
+			color: $white;
+		}
+
+		&:nth-child(1){
+			top: $menu-spacing;
+			left: $menu-spacing;
+		}
+
+		&:nth-child(2){
+			top: $menu-spacing;
+			right: $menu-spacing;
+		}
+
+		&:nth-child(3){
+			bottom: $menu-spacing;
+			left: $menu-spacing;
+		}
+
+		&:nth-child(4){
+			bottom: $menu-spacing;
+			right: $menu-spacing;
+		}
+
+	}
+
 
 }
+
 /* sidebar */
 .sidebar {
 
 }
+
 /* footer */
 .footer {
 
@@ -120,6 +194,16 @@ input:focus {
 //	PAGES
 //------------------------------------*/
 
+.post-404{
+	display: block;
+	width: 100%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	color: $white;
+	text-align: center;
+}
 
 
 //------------------------------------*\

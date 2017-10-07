@@ -69,18 +69,18 @@ function html5blank_nav()
 	array(
 		'theme_location'  => 'header-menu',
 		'menu'            => '',
-		'container'       => 'div',
-		'container_class' => 'menu-{menu slug}-container',
+		'container'       => false,
+		'container_class' => false,
 		'container_id'    => '',
-		'menu_class'      => 'menu',
+		'menu_class'      => '',
 		'menu_id'         => '',
 		'echo'            => true,
-		'fallback_cb'     => 'wp_page_menu',
+		'fallback_cb'     => '',
 		'before'          => '',
 		'after'           => '',
 		'link_before'     => '',
 		'link_after'      => '',
-		'items_wrap'      => '<ul>%3$s</ul>',
+		'items_wrap'      => '%3$s',
 		'depth'           => 0,
 		'walker'          => ''
 		)
@@ -417,9 +417,11 @@ function create_post_type_banners()
             'not_found' => __('No Banners found', 'banners'),
             'not_found_in_trash' => __('No Banners found in Trash', 'banners')
         ),
-        'public' => true,
-        'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
-        'has_archive' => true,
+        'public' => false,
+        'has_archive' => false,
+        'publicaly_queryable' => false,
+        'query_var' => false,
+        'hierarchical' => false, // Allows your posts to behave like Hierarchy Pages
         'supports' => array(
             'title',
             'thumbnail'
