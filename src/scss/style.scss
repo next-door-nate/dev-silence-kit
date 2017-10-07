@@ -14,10 +14,12 @@
 //------------------------------------
 
 $light: #f1f4f7;
+$black: #000;
+
 
 
 body{
-	background: $light !important;
+	background: $black !important;
 }
 
 //------------------------------------
@@ -34,6 +36,7 @@ body{
 	font-smoothing:antialiased;
 	text-rendering:optimizeLegibility;
 }
+
 /* html element 62.5% font-size for REM use */
 html {
 	font-size:62.5%;

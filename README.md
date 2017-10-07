@@ -56,3 +56,8 @@
 * Tags support for showing Post Tags
 * Category support for showing the Category of post
 * Author support showing the author
+
+### Getting Started
+`cd` into the silence kit theme
+run `npm install`
+then run `gulp`
