@@ -1,6 +1,6 @@
 <?php
 /*
- *  Author: Todd Motto | @toddmotto
+ *  Author: Nate Vandervis | @natewich
  *  URL: html5blank.com | @html5blank
  *  Custom functions, support, custom post types and more.
  */
@@ -345,7 +345,8 @@ add_action('wp_print_scripts', 'html5blank_conditional_scripts'); // Add Conditi
 add_action('get_header', 'enable_threaded_comments'); // Enable Threaded Comments
 add_action('wp_enqueue_scripts', 'html5blank_styles'); // Add Theme Stylesheet
 add_action('init', 'register_html5_menu'); // Add HTML5 Blank Menu
-add_action('init', 'create_post_type_html5'); // Add our HTML5 Blank Custom Post Type
+add_action('init', 'create_post_type_banners'); // Add our Banners Post Type
+add_action('init', 'create_post_type_shows'); // Add our Shows Post Type
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
 add_action('init', 'html5wp_pagination'); // Add our HTML5 Pagination
 
@@ -395,36 +396,34 @@ add_shortcode('html5_shortcode_demo_2', 'html5_shortcode_demo_2'); // Place [htm
 	Custom Post Types
 \*------------------------------------*/
 
-// Create 1 Custom Post type for a Demo, called HTML5-Blank
-function create_post_type_html5()
+// Banners Custom Post Type
+function create_post_type_banners()
 {
-    register_taxonomy_for_object_type('category', 'html5-blank'); // Register Taxonomies for Category
-    register_taxonomy_for_object_type('post_tag', 'html5-blank');
-    register_post_type('html5-blank', // Register Custom Post Type
+    register_taxonomy_for_object_type('category', 'banners'); // Register Taxonomies for Category
+    register_taxonomy_for_object_type('post_tag', 'banners');
+    register_post_type('banners', // Register Custom Post Type
         array(
         'labels' => array(
-            'name' => __('HTML5 Blank Custom Post', 'html5blank'), // Rename these to suit
-            'singular_name' => __('HTML5 Blank Custom Post', 'html5blank'),
-            'add_new' => __('Add New', 'html5blank'),
-            'add_new_item' => __('Add New HTML5 Blank Custom Post', 'html5blank'),
-            'edit' => __('Edit', 'html5blank'),
-            'edit_item' => __('Edit HTML5 Blank Custom Post', 'html5blank'),
-            'new_item' => __('New HTML5 Blank Custom Post', 'html5blank'),
-            'view' => __('View HTML5 Blank Custom Post', 'html5blank'),
-            'view_item' => __('View HTML5 Blank Custom Post', 'html5blank'),
-            'search_items' => __('Search HTML5 Blank Custom Post', 'html5blank'),
-            'not_found' => __('No HTML5 Blank Custom Posts found', 'html5blank'),
-            'not_found_in_trash' => __('No HTML5 Blank Custom Posts found in Trash', 'html5blank')
+            'name' => __('Banners', 'banners'),
+            'singular_name' => __('Banner', 'banners'),
+            'add_new' => __('Add Banner', 'banners'),
+            'add_new_item' => __('Add New Banner', 'banners'),
+            'edit' => __('Edit', 'banners'),
+            'edit_item' => __('Edit Banner', 'banners'),
+            'new_item' => __('New Banner', 'banners'),
+            'view' => __('View Banner', 'banners'),
+            'view_item' => __('View Banner', 'banners'),
+            'search_items' => __('Search Banners', 'banners'),
+            'not_found' => __('No Banners found', 'banners'),
+            'not_found_in_trash' => __('No Banners found in Trash', 'banners')
         ),
         'public' => true,
         'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
         'has_archive' => true,
         'supports' => array(
             'title',
-            'editor',
-            'excerpt',
             'thumbnail'
-        ), // Go to Dashboard Custom HTML5 Blank post for supports
+        ),
         'can_export' => true, // Allows export in Tools > Export
         'taxonomies' => array(
             'post_tag',
@@ -432,6 +431,129 @@ function create_post_type_html5()
         ) // Add Category and Post Tags support
     ));
 }
+
+// Shows Custom Post Type
+function create_post_type_shows()
+{
+    register_taxonomy_for_object_type('category', 'shows'); // Register Taxonomies for Category
+    register_taxonomy_for_object_type('post_tag', 'shows');
+    register_post_type('shows', // Register Custom Post Type
+        array(
+        'labels' => array(
+            'name' => __('Shows', 'shows'),
+            'singular_name' => __('Show', 'shows'),
+            'add_new' => __('Add Show', 'shows'),
+            'add_new_item' => __('Add New Show', 'shows'),
+            'edit' => __('Edit', 'shows'),
+            'edit_item' => __('Edit Show', 'shows'),
+            'new_item' => __('New Show', 'shows'),
+            'view' => __('View Show', 'shows'),
+            'view_item' => __('View Show', 'shows'),
+            'search_items' => __('Search Shows', 'shows'),
+            'not_found' => __('No Shows found', 'shows'),
+            'not_found_in_trash' => __('No Shows found in Trash', 'shows')
+        ),
+        'public' => true,
+        'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
+        'has_archive' => true,
+        'supports' => array(
+            'title',
+            'thumbnail'
+        ),
+        'can_export' => true, // Allows export in Tools > Export
+        'taxonomies' => array(
+            'post_tag',
+            'category'
+        ) // Add Category and Post Tags support
+    ));
+}
+
+function custom_meta_box_markup($object)
+{
+    wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+
+    ?>
+        <div>
+            <label for="shows-text-date">Show date:</label>
+            <input name="shows-text-date" type="text" value="<?php echo get_post_meta($object->ID, "shows-text-date", true); ?>">
+
+
+            <br>
+
+            <label for="shows-checkbox-publish">Publish:</label>
+            <?php
+                $checkbox_value = get_post_meta($object->ID, "shows-checkbox-publish", true);
+
+                if($checkbox_value == "")
+                {
+                    ?>
+                        <input name="shows-checkbox-publish" type="checkbox" value="true">
+                    <?php
+                }
+                else if($checkbox_value == "true")
+                {
+                    ?>
+                        <input name="shows-checkbox-publish" type="checkbox" value="true" checked>
+                    <?php
+                }
+            ?>
+        </div>
+    <?php
+}
+
+function add_custom_meta_box()
+{
+    add_meta_box("shows-meta-box", "Show info", "custom_meta_box_markup", "shows", "normal", "high", null);
+}
+
+add_action("add_meta_boxes", "add_custom_meta_box");
+
+function save_custom_meta_box($post_id, $post, $update)
+{
+    if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
+        return $post_id;
+
+    if(!current_user_can("edit_post", $post_id))
+        return $post_id;
+
+    if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+        return $post_id;
+
+    $slug = "shows";
+    if($slug != $post->post_type)
+        return $post_id;
+
+    $meta_box_text_value = "";
+    $meta_box_dropdown_value = "";
+    $meta_box_checkbox_value = "";
+
+    if(isset($_POST["shows-text-date"]))
+    {
+        $meta_box_text_value = $_POST["shows-text-date"];
+    }
+    update_post_meta($post_id, "shows-text-date", $meta_box_text_value);
+
+    if(isset($_POST["meta-box-dropdown"]))
+    {
+        $meta_box_dropdown_value = $_POST["meta-box-dropdown"];
+    }
+    update_post_meta($post_id, "meta-box-dropdown", $meta_box_dropdown_value);
+
+    if(isset($_POST["shows-checkbox-publish"]))
+    {
+        $meta_box_checkbox_value = $_POST["shows-checkbox-publish"];
+    }
+    update_post_meta($post_id, "shows-checkbox-publish", $meta_box_checkbox_value);
+}
+
+add_action("save_post", "save_custom_meta_box", 10, 3);
+
+function remove_custom_field_meta_box()
+{
+    remove_meta_box("postcustom", "shows", "normal");
+}
+
+add_action("do_meta_boxes", "remove_custom_field_meta_box");
 
 /*------------------------------------*\
 	ShortCode Functions
