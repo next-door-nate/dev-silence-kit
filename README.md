@@ -61,3 +61,4 @@
 `cd` into the silence kit theme
 run `npm install`
 then run `gulp`
+did it work
