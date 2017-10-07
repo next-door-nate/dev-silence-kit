@@ -69,18 +69,18 @@ function html5blank_nav()
 	array(
 		'theme_location'  => 'header-menu',
 		'menu'            => '',
-		'container'       => 'div',
-		'container_class' => 'menu-{menu slug}-container',
+		'container'       => false,
+		'container_class' => false,
 		'container_id'    => '',
-		'menu_class'      => 'menu',
+		'menu_class'      => '',
 		'menu_id'         => '',
 		'echo'            => true,
-		'fallback_cb'     => 'wp_page_menu',
+		'fallback_cb'     => '',
 		'before'          => '',
 		'after'           => '',
 		'link_before'     => '',
 		'link_after'      => '',
-		'items_wrap'      => '<ul>%3$s</ul>',
+		'items_wrap'      => '%3$s',
 		'depth'           => 0,
 		'walker'          => ''
 		)
