@@ -1,0 +1,28 @@
+<svg version="1.1"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:a="http://ns.adobe.com/AdobeSVGViewerExtensions/3.0/"
+	 x="0px" y="0px" width="489px" height="196px" viewBox="0 0 489 196" style="enable-background:new 0 0 489 196;"
+	 xml:space="preserve">
+<style type="text/css">
+	.silence-kit__logo{fill:rgba(255,255,255,.7);}
+</style>
+<defs>
+</defs>
+<polygon class="silence-kit__logo" points="47,14 47,0 0,0 0,196 47,196 47,182 18,182 18,136 39,136 39,162 59,162 59,77 18,77 18,14 "/>
+<polygon class="silence-kit__logo" points="53,0 53,14 81,14 81,43 59,43 59,33 39,33 39,58 81,58 81,182 53,182 53,196 98,196 98,148 105,148
+	105,134 98,134 98,14 105,14 105,0 "/>
+<polygon class="silence-kit__logo" points="111,0 111,14 118,14 118,134 111,134 111,148 157,148 157,134 136,134 136,14 142,14 142,0 "/>
+<polyline class="silence-kit__logo" points="148,0 148,14 155,14 155,114 184,114 184,134 163,134 163,148 223,148 223,134 199,134 199,14 223,14
+	223,0 "/>
+<polygon class="silence-kit__logo" points="229,0 229,14 254,14 254,33 218,33 218,47 247,47 247,63 218,63 218,114 254,114 254,134 229,134
+	229,148 311,148 311,133 304,133 287,86 287,134 269,134 269,14 276,14 276,0 "/>
+<polygon class="silence-kit__logo" points="281,0 281,14 287,14 304,81 304,14 323,14 323,133 316,133 316,148 362,148 362,133 338,133 338,14
+	362,14 362,0 "/>
+<polygon class="silence-kit__logo" points="368,0 368,14 392,14 392,49 373,49 373,33 356,33 356,115 374,115 374,89 392,89 392,133 368,133
+	368,148 392,148 392,196 438,196 438,181 410,181 410,14 438,14 438,0 "/>
+<polygon class="silence-kit__logo" points="444,0 444,14 473,14 473,33 431,33 431,49 465,49 465,66 431,66 431,162 473,162 473,181 444,181
+	444,196 489,196 489,0 "/>
+<polygon class="silence-kit__logo" points="152,165 152,196 162,196 162,186 163,185 164,185 170,196 183,196 171,177 183,165 170,165 162,173
+	162,165 "/>
+<rect x="242" y="165" class="silence-kit__logo" width="11" height="31"/>
+<polygon class="silence-kit__logo" points="311,165 311,174 321,174 321,196 332,196 332,174 342,174 342,165 "/>
+</svg>

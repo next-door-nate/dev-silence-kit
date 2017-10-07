@@ -417,9 +417,11 @@ function create_post_type_banners()
             'not_found' => __('No Banners found', 'banners'),
             'not_found_in_trash' => __('No Banners found in Trash', 'banners')
         ),
-        'public' => true,
-        'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
-        'has_archive' => true,
+        'public' => false,
+        'has_archive' => false,
+        'publicaly_queryable' => false,
+        'query_var' => false,
+        'hierarchical' => false, // Allows your posts to behave like Hierarchy Pages
         'supports' => array(
             'title',
             'thumbnail'
