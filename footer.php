@@ -1,10 +1,21 @@
 			<!-- footer -->
 			<footer class="footer" role="contentinfo">
 
+				<section class="social-media">
+					<nav>
+						<a class="social-media__facebook" href="https://facebook.com"><i class="fa fa-facebook"></i></a>
+						<a class="social-media__twitter" href="https://twitter.com"><i class="fa fa-twitter"></i></a>
+						<a class="social-media__instagram" href="https://instagram.com"><i class="fa fa-instagram"></i></a>
+						<a class="social-media__spotify" href="https://spotify.com"><i class="fa fa-spotify"></i></a>
+						<a class="social-media__apple" href="https://apple.com"><i class="fa fa-apple"></i></a>
+						<a class="social-media__google" href="https://google.com"><i class="fa fa-google"></i></a>
+					</nav>
+				</section>
+
 				<!-- copyright -->
 				<p class="copyright">
-					&copy; <?php echo date('Y'); ?> Copyright <?php bloginfo('name'); ?>. <?php _e('Powered by', 'html5blank'); ?>
-					<a href="//wordpress.org" title="WordPress">WordPress</a> &amp; <a href="//html5blank.com" title="HTML5 Blank">HTML5 Blank</a>.
+					&copy; <?php echo date('Y'); ?> - <?php bloginfo('name'); ?> - All rights reserved -
+					Site by <a href="//slowjams.co" title="A Slowjams Joint">slow jams</a>.
 				</p>
 				<!-- /copyright -->
 

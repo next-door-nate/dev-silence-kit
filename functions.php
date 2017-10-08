@@ -420,6 +420,7 @@ function create_post_type_banners()
         'public' => true,
         'has_archive' => false,
         'publicaly_queryable' => false,
+        'exclude_from_search' => true,
         'query_var' => false,
         'hierarchical' => false, // Allows your posts to behave like Hierarchy Pages
         'supports' => array(
@@ -456,8 +457,10 @@ function create_post_type_shows()
             'not_found_in_trash' => __('No Shows found in Trash', 'shows')
         ),
         'public' => true,
-        'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
-        'has_archive' => true,
+        'has_archive' => false,
+        'publicaly_queryable' => false,
+        'query_var' => false,
+        'hierarchical' => false,
         'supports' => array(
             'title',
             'thumbnail'
@@ -470,47 +473,61 @@ function create_post_type_shows()
     ));
 }
 
-function custom_meta_box_markup($object)
+function show_meta_box_markup($object)
 {
     wp_nonce_field(basename(__FILE__), "meta-box-nonce");
 
     ?>
-        <div>
+
+        <style>
+          .slow-jams-custom{
+          }
+          .slow-jams-custom label{
+            display: block;
+            width: 100%;
+          }
+          .slow-jams-custom input{
+            display: block;
+            max-width: 500px;
+            width: 100%;
+            padding: 8px 10px;
+            max-height: 50px;
+            border-radius: 3px;
+          }
+        </style>
+
+        <div class="slow-jams-custom">
             <label for="shows-text-date">Show date:</label>
-            <input name="shows-text-date" type="text" value="<?php echo get_post_meta($object->ID, "shows-text-date", true); ?>">
+            <input name="shows-text-date" type="text" placeholder="Aug 25, 2017" value="<?php echo get_post_meta($object->ID, "shows-text-date", true); ?>">
+
+            <br/>
+
+            <label for="shows-text-venue">Show venue:</label>
+            <input name="shows-text-venue" type="text" placeholder="Goodwill Social Club or whatever..." value="<?php echo get_post_meta($object->ID, "shows-text-venue", true); ?>">
+
+            <br />
+
+            <label for="shows-text-city">Show city:</label>
+            <input name="shows-text-city" type="text" placeholder="Winnipeg, MB or New York, USA, or whatever..." value="<?php echo get_post_meta($object->ID, "shows-text-city", true); ?>">
+
+            <br />
+
+            <label for="shows-text-link">Show link:</label>
+            <input name="shows-text-link" type="text" placeholder="Something like this --> https://slowjams.co" value="<?php echo get_post_meta($object->ID, "shows-text-link", true); ?>">
 
 
-            <br>
-
-            <label for="shows-checkbox-publish">Publish:</label>
-            <?php
-                $checkbox_value = get_post_meta($object->ID, "shows-checkbox-publish", true);
-
-                if($checkbox_value == "")
-                {
-                    ?>
-                        <input name="shows-checkbox-publish" type="checkbox" value="true">
-                    <?php
-                }
-                else if($checkbox_value == "true")
-                {
-                    ?>
-                        <input name="shows-checkbox-publish" type="checkbox" value="true" checked>
-                    <?php
-                }
-            ?>
         </div>
     <?php
 }
 
-function add_custom_meta_box()
+function add_show_meta_box()
 {
-    add_meta_box("shows-meta-box", "Show info", "custom_meta_box_markup", "shows", "normal", "high", null);
+    add_meta_box("shows-meta-box", "Show info", "show_meta_box_markup", "shows", "normal", "high", "show_in_rest", null);
 }
 
-add_action("add_meta_boxes", "add_custom_meta_box");
+add_action("add_meta_boxes", "add_show_meta_box");
 
-function save_custom_meta_box($post_id, $post, $update)
+function save_show_meta_box($post_id, $post, $update)
 {
     if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
         return $post_id;
@@ -525,37 +542,46 @@ function save_custom_meta_box($post_id, $post, $update)
     if($slug != $post->post_type)
         return $post_id;
 
-    $meta_box_text_value = "";
-    $meta_box_dropdown_value = "";
-    $meta_box_checkbox_value = "";
+    $show_date = "";
+    $show_venue = "";
+    $show_city = "";
+    $show_link = "";
 
     if(isset($_POST["shows-text-date"]))
     {
-        $meta_box_text_value = $_POST["shows-text-date"];
+        $show_date = $_POST["shows-text-date"];
     }
-    update_post_meta($post_id, "shows-text-date", $meta_box_text_value);
+    update_post_meta($post_id, "shows-text-date", $show_date);
 
-    if(isset($_POST["meta-box-dropdown"]))
+    if(isset($_POST["shows-text-venue"]))
     {
-        $meta_box_dropdown_value = $_POST["meta-box-dropdown"];
+        $show_venue = $_POST["shows-text-venue"];
     }
-    update_post_meta($post_id, "meta-box-dropdown", $meta_box_dropdown_value);
+    update_post_meta($post_id, "shows-text-venue", $show_venue);
 
-    if(isset($_POST["shows-checkbox-publish"]))
+    if(isset($_POST["shows-text-city"]))
     {
-        $meta_box_checkbox_value = $_POST["shows-checkbox-publish"];
+        $show_city = $_POST["shows-text-city"];
     }
-    update_post_meta($post_id, "shows-checkbox-publish", $meta_box_checkbox_value);
+    update_post_meta($post_id, "shows-text-city", $show_city);
+
+    if(isset($_POST["shows-text-link"]))
+    {
+        $show_link = $_POST["shows-text-link"];
+    }
+    update_post_meta($post_id, "shows-text-link", $show_link);
+
+
 }
 
-add_action("save_post", "save_custom_meta_box", 10, 3);
+add_action("save_post", "save_show_meta_box", 10, 3);
 
-function remove_custom_field_meta_box()
+function remove_shows_field_meta_box()
 {
     remove_meta_box("postcustom", "shows", "normal");
 }
 
-add_action("do_meta_boxes", "remove_custom_field_meta_box");
+add_action("do_meta_boxes", "remove_shows_field_meta_box");
 
 /*------------------------------------*\
 	ShortCode Functions
@@ -572,5 +598,48 @@ function html5_shortcode_demo_2($atts, $content = null) // Demo Heading H2 short
 {
     return '<h2>' . $content . '</h2>';
 }
+
+
+/*-------------------------------------*\
+	Nav Walker to strip <li> from wp_nav_menu()
+\*------------------------------------*/
+
+class Nav_Footer_Walker extends Walker_Nav_Menu {
+	function start_lvl( &$output, $depth = 0, $args = array() ) {
+		$indent = str_repeat("\t", $depth);
+		$output .= "\n$indent\n";
+	}
+	function end_lvl( &$output, $depth = 0, $args = array() ) {
+		$indent = str_repeat("\t", $depth);
+		$output .= "$indent\n";
+	}
+	function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
+		$class_names = $value = '';
+		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
+		$classes[] = 'menu-item-' . $item->ID;
+		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
+		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+		$id = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args );
+		$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
+		$output .= $indent . '';
+		$attributes  = ! empty( $item->attr_title ) ? ' title="'  . esc_attr( $item->attr_title ) .'"' : '';
+		$attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
+		$attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
+		$attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : '';
+		$item_output = $args->before;
+		$item_output .= '<a '. $class_names .''. $attributes .'>';
+		$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
+		$item_output .= '</a>';
+		$item_output .= $args->after;
+		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+	}
+	function end_el( &$output, $item, $depth = 0, $args = array() ) {
+		$output .= "\n";
+	}
+}
+
+
+
 
 ?>

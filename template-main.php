@@ -1,20 +1,19 @@
 <?php /* Template Name: Main Template */ get_header(); ?>
 
 <main role="main">
-	<!-- section -->
-	<section>
 
-		<a class="logo" href="" title=''>
-			<img src="<?php echo get_template_directory_uri(); ?>/img/logo.svg" alt="Silence Kit Band Logo - Winnipeg, Canada">
-		</a>
+	<!-- logo -->
+	<a class="logo" href="" title=''>
+		<img src="<?php echo get_template_directory_uri(); ?>/img/logo.svg" alt="Silence Kit Band Logo - Winnipeg, Canada">
+	</a>
+	<!-- /logo -->
 
-	</section>
-	<!-- /section -->
-
+	<!-- banner -->
 	<section class="banner">
 		<?php
 			$args = array(
 				'post_type' => 'banners',
+				'orderby'   => 'rand',
 			 	'posts_per_page' => 5
 			);
 
@@ -28,5 +27,78 @@
 			endwhile;
 		?>
 	</section>
+	<!-- banner -->
+
+
+
+	<!-- shows -->
+	<section id="shows" class="shows modal mfp-hide zoom-anim-dialog">
+		<h3>Shows</h3>
+
+		<?php
+			$args = array(
+				'post_type' => 'shows',
+			 	'posts_per_page' => 100
+			);
+
+			$loop = new WP_Query( $args );
+
+			while ( $loop->have_posts() ) : $loop->the_post();
+
+			echo '<div class="shows__indv"><h4>';
+			the_title();
+			echo '</h4></div>';
+			endwhile;
+		?>
+	</section>
+	<!-- /shows -->
+
+
+	<!-- music -->
+	<section id="music" class="music modal mfp-hide zoom-anim-dialog">
+		<h3>Music</h3>
+
+		<?php
+			// $args = array(
+			// 	'post_type' => 'music',
+			//  	'posts_per_page' => 100
+			// );
+			//
+			// $loop = new WP_Query( $args );
+			//
+			// while ( $loop->have_posts() ) : $loop->the_post();
+			//
+			// echo '<div class="music__indv"><h4>';
+			// the_title();
+			// echo '</h4></div>';
+			// endwhile;
+		?>
+	</section>
+	<!-- /music -->
+
+	<!-- video -->
+	<section id="video" class="video modal mfp-hide zoom-anim-dialog">
+		<h3>Video</h3>
+
+		<?php
+			// $args = array(
+			// 	'post_type' => 'music',
+			//  	'posts_per_page' => 100
+			// );
+			//
+			// $loop = new WP_Query( $args );
+			//
+			// while ( $loop->have_posts() ) : $loop->the_post();
+			//
+			// echo '<div class="music__indv"><h4>';
+			// the_title();
+			// echo '</h4></div>';
+			// endwhile;
+		?>
+	</section>
+	<!-- /video -->
+
+
+	<?php get_footer(); ?>
 
 </main>
