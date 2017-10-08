@@ -417,7 +417,7 @@ function create_post_type_banners()
             'not_found' => __('No Banners found', 'banners'),
             'not_found_in_trash' => __('No Banners found in Trash', 'banners')
         ),
-        'public' => false,
+        'public' => true,
         'has_archive' => false,
         'publicaly_queryable' => false,
         'query_var' => false,

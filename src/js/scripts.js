@@ -8,7 +8,21 @@
 
 		'use strict';
 
-		// DOM ready, take it away
+		// DOM ready.... FIGHT!!
+
+		$('.banner').slick({
+			dots: false,
+			autoplay: true,
+			arrows: false,
+		  infinite: true,
+			autoplaySpeed: 10000,
+		  speed: 5000,
+			pauseOnFocus: false,
+			pauseOnHover: false,
+			draggable: false,
+		  fade: true,
+		  cssEase: 'linear'
+		});
 
 	});
 
