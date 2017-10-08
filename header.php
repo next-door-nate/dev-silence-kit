@@ -16,7 +16,10 @@
 		<link href="https://fonts.googleapis.com/css?family=Manuale:400,500|Open+Sans" rel="stylesheet">
 
 		<?php wp_head(); ?>
+
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+
 
 		<script>
         // conditionizr.com
@@ -49,9 +52,14 @@
 						<?php
 							$menuParameters = array(
 						    'echo' => false,
+								'items_wrap'=> '%3$s',
+							  'walker' => new Nav_Footer_Walker(),
+
 							);
 
-							echo strip_tags(wp_nav_menu( $menuParameters ), '<a><nav>' );
+							echo wp_nav_menu( $menuParameters );
+
+							//echo strip_tags(wp_nav_menu( $menuParameters ), '<a><nav>' );
 						?>
 
 					</nav>
