@@ -16,6 +16,7 @@
 		<link href="https://fonts.googleapis.com/css?family=Manuale:400,500|Open+Sans" rel="stylesheet">
 
 		<?php wp_head(); ?>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 
 		<script>
         // conditionizr.com
