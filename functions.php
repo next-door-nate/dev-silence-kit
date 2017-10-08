@@ -420,6 +420,7 @@ function create_post_type_banners()
         'public' => true,
         'has_archive' => false,
         'publicaly_queryable' => false,
+        'exclude_from_search' => true,
         'query_var' => false,
         'hierarchical' => false, // Allows your posts to behave like Hierarchy Pages
         'supports' => array(
@@ -456,9 +457,10 @@ function create_post_type_shows()
             'not_found_in_trash' => __('No Shows found in Trash', 'shows')
         ),
         'public' => true,
-        'show_in_rest' => true,
-        'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
-        'has_archive' => true,
+        'has_archive' => false,
+        'publicaly_queryable' => false,
+        'query_var' => false,
+        'hierarchical' => false,
         'supports' => array(
             'title',
             'thumbnail'
@@ -476,22 +478,56 @@ function show_meta_box_markup($object)
     wp_nonce_field(basename(__FILE__), "meta-box-nonce");
 
     ?>
-        <div>
+
+        <style>
+          .slow-jams-custom{
+          }
+          .slow-jams-custom label{
+            display: block;
+            width: 100%;
+          }
+          .slow-jams-custom input{
+            display: block;
+            max-width: 500px;
+            width: 100%;
+            padding: 8px 10px;
+            max-height: 50px;
+            border-radius: 3px;
+          }
+        </style>
+
+        <div class="slow-jams-custom">
             <label for="shows-text-date">Show date:</label>
-            <input name="shows-text-date" type="date" value="<?php echo get_post_meta($object->ID, "shows-text-date", true); ?>">
+            <input name="shows-text-date" type="text" placeholder="Aug 25, 2017" value="<?php echo get_post_meta($object->ID, "shows-text-date", true); ?>">
+
+            <br/>
+
+            <label for="shows-text-venue">Show venue:</label>
+            <input name="shows-text-venue" type="text" placeholder="Goodwill Social Club or whatever..." value="<?php echo get_post_meta($object->ID, "shows-text-venue", true); ?>">
+
+            <br />
+
+            <label for="shows-text-city">Show city:</label>
+            <input name="shows-text-city" type="text" placeholder="Winnipeg, MB or New York, USA, or whatever..." value="<?php echo get_post_meta($object->ID, "shows-text-city", true); ?>">
+
+            <br />
+
+            <label for="shows-text-link">Show link:</label>
+            <input name="shows-text-link" type="text" placeholder="Something like this --> https://slowjams.co" value="<?php echo get_post_meta($object->ID, "shows-text-link", true); ?>">
+
 
         </div>
     <?php
 }
 
-function add_custom_meta_box()
+function add_show_meta_box()
 {
     add_meta_box("shows-meta-box", "Show info", "show_meta_box_markup", "shows", "normal", "high", "show_in_rest", null);
 }
 
-add_action("add_meta_boxes", "add_custom_meta_box");
+add_action("add_meta_boxes", "add_show_meta_box");
 
-function save_custom_meta_box($post_id, $post, $update)
+function save_show_meta_box($post_id, $post, $update)
 {
     if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
         return $post_id;
@@ -507,7 +543,9 @@ function save_custom_meta_box($post_id, $post, $update)
         return $post_id;
 
     $show_date = "";
-    $meta_box_dropdown_value = "";
+    $show_venue = "";
+    $show_city = "";
+    $show_link = "";
 
     if(isset($_POST["shows-text-date"]))
     {
@@ -515,22 +553,35 @@ function save_custom_meta_box($post_id, $post, $update)
     }
     update_post_meta($post_id, "shows-text-date", $show_date);
 
-    if(isset($_POST["meta-box-dropdown"]))
+    if(isset($_POST["shows-text-venue"]))
     {
-        $meta_box_dropdown_value = $_POST["meta-box-dropdown"];
+        $show_venue = $_POST["shows-text-venue"];
     }
-    update_post_meta($post_id, "meta-box-dropdown", $meta_box_dropdown_value);
+    update_post_meta($post_id, "shows-text-venue", $show_venue);
+
+    if(isset($_POST["shows-text-city"]))
+    {
+        $show_city = $_POST["shows-text-city"];
+    }
+    update_post_meta($post_id, "shows-text-city", $show_city);
+
+    if(isset($_POST["shows-text-link"]))
+    {
+        $show_link = $_POST["shows-text-link"];
+    }
+    update_post_meta($post_id, "shows-text-link", $show_link);
+
 
 }
 
-add_action("save_post", "save_custom_meta_box", 10, 3);
+add_action("save_post", "save_show_meta_box", 10, 3);
 
-function remove_custom_field_meta_box()
+function remove_shows_field_meta_box()
 {
     remove_meta_box("postcustom", "shows", "normal");
 }
 
-add_action("do_meta_boxes", "remove_custom_field_meta_box");
+add_action("do_meta_boxes", "remove_shows_field_meta_box");
 
 /*------------------------------------*\
 	ShortCode Functions
@@ -549,7 +600,7 @@ function html5_shortcode_demo_2($atts, $content = null) // Demo Heading H2 short
 }
 
 
-/*------------------------------------*\
+/*-------------------------------------*\
 	Nav Walker to strip <li> from wp_nav_menu()
 \*------------------------------------*/
 

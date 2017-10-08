@@ -13,6 +13,7 @@
 		<?php
 			$args = array(
 				'post_type' => 'banners',
+				'orderby'   => 'rand',
 			 	'posts_per_page' => 5
 			);
 
@@ -31,8 +32,8 @@
 
 
 	<!-- shows -->
-	<section id="shows" class="shows modal mfp-hide">
-		<h3>Music</h3>
+	<section id="shows" class="shows modal mfp-hide zoom-anim-dialog">
+		<h3>Shows</h3>
 
 		<?php
 			$args = array(
@@ -50,8 +51,52 @@
 			endwhile;
 		?>
 	</section>
-
 	<!-- /shows -->
+
+
+	<!-- music -->
+	<section id="music" class="music modal mfp-hide zoom-anim-dialog">
+		<h3>Music</h3>
+
+		<?php
+			// $args = array(
+			// 	'post_type' => 'music',
+			//  	'posts_per_page' => 100
+			// );
+			//
+			// $loop = new WP_Query( $args );
+			//
+			// while ( $loop->have_posts() ) : $loop->the_post();
+			//
+			// echo '<div class="music__indv"><h4>';
+			// the_title();
+			// echo '</h4></div>';
+			// endwhile;
+		?>
+	</section>
+	<!-- /music -->
+
+	<!-- video -->
+	<section id="video" class="video modal mfp-hide zoom-anim-dialog">
+		<h3>Video</h3>
+
+		<?php
+			// $args = array(
+			// 	'post_type' => 'music',
+			//  	'posts_per_page' => 100
+			// );
+			//
+			// $loop = new WP_Query( $args );
+			//
+			// while ( $loop->have_posts() ) : $loop->the_post();
+			//
+			// echo '<div class="music__indv"><h4>';
+			// the_title();
+			// echo '</h4></div>';
+			// endwhile;
+		?>
+	</section>
+	<!-- /video -->
 
 
 	<?php get_footer(); ?>

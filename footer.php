@@ -14,8 +14,8 @@
 
 				<!-- copyright -->
 				<p class="copyright">
-					&copy; <?php echo date('Y'); ?> - <?php bloginfo('name'); ?> - All rights reserved - 
-					Site by <a href="//slowjams.co" title="A Slowjams Joint">Slowjams</a>.
+					&copy; <?php echo date('Y'); ?> - <?php bloginfo('name'); ?> - All rights reserved -
+					Site by <a href="//slowjams.co" title="A Slowjams Joint">slow jams</a>.
 				</p>
 				<!-- /copyright -->
 
