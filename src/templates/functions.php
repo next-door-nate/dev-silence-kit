@@ -1,6 +1,6 @@
 <?php
 /*
- *  Author: Todd Motto | @toddmotto
+ *  Author: Nate Vandervis | @natewich
  *  URL: html5blank.com | @html5blank
  *  Custom functions, support, custom post types and more.
  */
@@ -69,18 +69,18 @@ function html5blank_nav()
 	array(
 		'theme_location'  => 'header-menu',
 		'menu'            => '',
-		'container'       => 'div',
-		'container_class' => 'menu-{menu slug}-container',
+		'container'       => false,
+		'container_class' => false,
 		'container_id'    => '',
-		'menu_class'      => 'menu',
+		'menu_class'      => '',
 		'menu_id'         => '',
 		'echo'            => true,
-		'fallback_cb'     => 'wp_page_menu',
+		'fallback_cb'     => '',
 		'before'          => '',
 		'after'           => '',
 		'link_before'     => '',
 		'link_after'      => '',
-		'items_wrap'      => '<ul>%3$s</ul>',
+		'items_wrap'      => '%3$s',
 		'depth'           => 0,
 		'walker'          => ''
 		)
@@ -345,7 +345,10 @@ add_action('wp_print_scripts', 'html5blank_conditional_scripts'); // Add Conditi
 add_action('get_header', 'enable_threaded_comments'); // Enable Threaded Comments
 add_action('wp_enqueue_scripts', 'html5blank_styles'); // Add Theme Stylesheet
 add_action('init', 'register_html5_menu'); // Add HTML5 Blank Menu
-add_action('init', 'create_post_type_html5'); // Add our HTML5 Blank Custom Post Type
+add_action('init', 'create_post_type_banners'); // Add our Banners Post Type
+add_action('init', 'create_post_type_shows'); // Add our Shows Post Type
+add_action('init', 'create_post_type_music'); // Add our Music Post Type
+add_action('init', 'create_post_type_videos'); // Add our Videos Post Type
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
 add_action('init', 'html5wp_pagination'); // Add our HTML5 Pagination
 
@@ -395,36 +398,37 @@ add_shortcode('html5_shortcode_demo_2', 'html5_shortcode_demo_2'); // Place [htm
 	Custom Post Types
 \*------------------------------------*/
 
-// Create 1 Custom Post type for a Demo, called HTML5-Blank
-function create_post_type_html5()
+// Banners Custom Post Type
+function create_post_type_banners()
 {
-    register_taxonomy_for_object_type('category', 'html5-blank'); // Register Taxonomies for Category
-    register_taxonomy_for_object_type('post_tag', 'html5-blank');
-    register_post_type('html5-blank', // Register Custom Post Type
+    register_taxonomy_for_object_type('category', 'banners'); // Register Taxonomies for Category
+    register_taxonomy_for_object_type('post_tag', 'banners');
+    register_post_type('banners', // Register Custom Post Type
         array(
         'labels' => array(
-            'name' => __('HTML5 Blank Custom Post', 'html5blank'), // Rename these to suit
-            'singular_name' => __('HTML5 Blank Custom Post', 'html5blank'),
-            'add_new' => __('Add New', 'html5blank'),
-            'add_new_item' => __('Add New HTML5 Blank Custom Post', 'html5blank'),
-            'edit' => __('Edit', 'html5blank'),
-            'edit_item' => __('Edit HTML5 Blank Custom Post', 'html5blank'),
-            'new_item' => __('New HTML5 Blank Custom Post', 'html5blank'),
-            'view' => __('View HTML5 Blank Custom Post', 'html5blank'),
-            'view_item' => __('View HTML5 Blank Custom Post', 'html5blank'),
-            'search_items' => __('Search HTML5 Blank Custom Post', 'html5blank'),
-            'not_found' => __('No HTML5 Blank Custom Posts found', 'html5blank'),
-            'not_found_in_trash' => __('No HTML5 Blank Custom Posts found in Trash', 'html5blank')
+            'name' => __('Banners', 'banners'),
+            'singular_name' => __('Banner', 'banners'),
+            'add_new' => __('Add Banner', 'banners'),
+            'add_new_item' => __('Add New Banner', 'banners'),
+            'edit' => __('Edit', 'banners'),
+            'edit_item' => __('Edit Banner', 'banners'),
+            'new_item' => __('New Banner', 'banners'),
+            'view' => __('View Banner', 'banners'),
+            'view_item' => __('View Banner', 'banners'),
+            'search_items' => __('Search Banners', 'banners'),
+            'not_found' => __('No Banners found', 'banners'),
+            'not_found_in_trash' => __('No Banners found in Trash', 'banners')
         ),
         'public' => true,
-        'hierarchical' => true, // Allows your posts to behave like Hierarchy Pages
-        'has_archive' => true,
+        'has_archive' => false,
+        'publicaly_queryable' => false,
+        'exclude_from_search' => true,
+        'query_var' => false,
+        'hierarchical' => false, // Allows your posts to behave like Hierarchy Pages
         'supports' => array(
             'title',
-            'editor',
-            'excerpt',
             'thumbnail'
-        ), // Go to Dashboard Custom HTML5 Blank post for supports
+        ),
         'can_export' => true, // Allows export in Tools > Export
         'taxonomies' => array(
             'post_tag',
@@ -432,6 +436,392 @@ function create_post_type_html5()
         ) // Add Category and Post Tags support
     ));
 }
+
+// Shows Custom Post Type
+function create_post_type_shows()
+{
+    register_taxonomy_for_object_type('category', 'shows'); // Register Taxonomies for Category
+    register_taxonomy_for_object_type('post_tag', 'shows');
+    register_post_type('shows', // Register Custom Post Type
+        array(
+        'labels' => array(
+            'name' => __('Shows', 'shows'),
+            'singular_name' => __('Show', 'shows'),
+            'add_new' => __('Add Show', 'shows'),
+            'add_new_item' => __('Add New Show', 'shows'),
+            'edit' => __('Edit', 'shows'),
+            'edit_item' => __('Edit Show', 'shows'),
+            'new_item' => __('New Show', 'shows'),
+            'view' => __('View Show', 'shows'),
+            'view_item' => __('View Show', 'shows'),
+            'search_items' => __('Search Shows', 'shows'),
+            'not_found' => __('No Shows found', 'shows'),
+            'not_found_in_trash' => __('No Shows found in Trash', 'shows')
+        ),
+        'public' => true,
+        'has_archive' => false,
+        'publicaly_queryable' => false,
+        'query_var' => false,
+        'hierarchical' => false,
+        'supports' => array(
+            'title',
+            'thumbnail'
+        ),
+        'can_export' => true, // Allows export in Tools > Export
+        'taxonomies' => array(
+            'post_tag',
+            'category'
+        ) // Add Category and Post Tags support
+    ));
+}
+
+function show_meta_box_markup($object)
+{
+    wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+
+    ?>
+
+        <style>
+          .slow-jams-custom{
+          }
+          .slow-jams-custom label{
+            display: block;
+            width: 100%;
+          }
+          .slow-jams-custom input{
+            display: block;
+            max-width: 500px;
+            width: 100%;
+            padding: 8px 10px;
+            max-height: 50px;
+            border-radius: 3px;
+          }
+        </style>
+
+        <div class="slow-jams-custom">
+            <label for="show-date">Show date:</label>
+            <input name="show-date" type="text" placeholder="Aug 25, 2017" value="<?php echo get_post_meta($object->ID, "show-date", true); ?>">
+
+            <br/>
+
+            <label for="show-venue">Show venue:</label>
+            <input name="show-venue" type="text" placeholder="Goodwill Social Club or whatever..." value="<?php echo get_post_meta($object->ID, "show-venue", true); ?>">
+
+            <br />
+
+            <label for="show-city">Show city:</label>
+            <input name="show-city" type="text" placeholder="Winnipeg, MB or New York, USA, or whatever..." value="<?php echo get_post_meta($object->ID, "show-city", true); ?>">
+
+            <br />
+
+            <label for="show-link">Show link:</label>
+            <input name="show-link" type="text" placeholder="Something like this --> https://slowjams.co" value="<?php echo get_post_meta($object->ID, "show-link", true); ?>">
+
+
+        </div>
+    <?php
+}
+
+function add_show_meta_box()
+{
+    add_meta_box("shows-meta-box", "Show info", "show_meta_box_markup", "shows", "normal", "high", "show_in_rest", null);
+}
+
+add_action("add_meta_boxes", "add_show_meta_box");
+
+function save_show_meta_box($post_id, $post, $update)
+{
+    if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
+        return $post_id;
+
+    if(!current_user_can("edit_post", $post_id))
+        return $post_id;
+
+    if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+        return $post_id;
+
+    $slug = "shows";
+    if($slug != $post->post_type)
+        return $post_id;
+
+    $show_date = "";
+    $show_venue = "";
+    $show_city = "";
+    $show_link = "";
+
+    if(isset($_POST["show-date"]))
+    {
+        $show_date = $_POST["show-date"];
+    }
+    update_post_meta($post_id, "show-date", $show_date);
+
+    if(isset($_POST["show-venue"]))
+    {
+        $show_venue = $_POST["show-venue"];
+    }
+    update_post_meta($post_id, "show-venue", $show_venue);
+
+    if(isset($_POST["show-city"]))
+    {
+        $show_city = $_POST["show-city"];
+    }
+    update_post_meta($post_id, "show-city", $show_city);
+
+    if(isset($_POST["show-link"]))
+    {
+        $show_link = $_POST["show-link"];
+    }
+    update_post_meta($post_id, "show-link", $show_link);
+
+
+}
+
+add_action("save_post", "save_show_meta_box", 10, 3);
+
+function remove_shows_field_meta_box()
+{
+    remove_meta_box("postcustom", "shows", "normal");
+}
+
+add_action("do_meta_boxes", "remove_shows_field_meta_box");
+
+
+
+
+// Music Custom Post Type
+function create_post_type_music()
+{
+    register_taxonomy_for_object_type('category', 'music'); // Register Taxonomies for Category
+    register_taxonomy_for_object_type('post_tag', 'music');
+    register_post_type('music', // Register Custom Post Type
+        array(
+        'labels' => array(
+            'name' => __('Music', 'music'),
+            'singular_name' => __('Music', 'music'),
+            'add_new' => __('Add Music', 'music'),
+            'add_new_item' => __('Add New Music', 'music'),
+            'edit' => __('Edit', 'music'),
+            'edit_item' => __('Edit Music', 'music'),
+            'new_item' => __('New Music', 'music'),
+            'view' => __('View Music', 'music'),
+            'view_item' => __('View Music', 'music'),
+            'search_items' => __('Search Music', 'music'),
+            'not_found' => __('No Music found', 'music'),
+            'not_found_in_trash' => __('No Music found in Trash', 'music')
+        ),
+        'public' => true,
+        'has_archive' => false,
+        'publicaly_queryable' => false,
+        'query_var' => false,
+        'hierarchical' => false,
+        'supports' => array(
+            'title',
+            'thumbnail'
+        ),
+        'can_export' => true, // Allows export in Tools > Export
+        'taxonomies' => array(
+            'post_tag',
+            'category'
+        ) // Add Category and Post Tags support
+    ));
+}
+
+
+function music_meta_box_markup($object)
+{
+    wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+
+    ?>
+
+        <style>
+          .slow-jams-custom{
+          }
+          .slow-jams-custom label{
+            display: block;
+            width: 100%;
+          }
+          .slow-jams-custom input{
+            display: block;
+            max-width: 500px;
+            width: 100%;
+            padding: 8px 10px;
+            max-height: 50px;
+            border-radius: 3px;
+          }
+        </style>
+
+        <div class="slow-jams-custom">
+            <label for="music-embed">Music embed link:</label>
+            <input name="music-embed" type="text" placeholder="https://bandcamp.com/EmbeddedPlayer ..." value="<?php echo get_post_meta($object->ID, "music-embed", true); ?>">
+
+            <br />
+
+            <label for="music-link">Music page link:</label>
+            <input name="music-link" type="text" placeholder="http://silencekitwpg.bandcamp.com/album/started-as-a-whisper" value="<?php echo get_post_meta($object->ID, "music-link", true); ?>">
+        </div>
+    <?php
+}
+
+function add_music_meta_box()
+{
+    add_meta_box("music-meta-box", "Music info", "music_meta_box_markup", "music", "normal", "high", "show_in_rest", null);
+}
+
+add_action("add_meta_boxes", "add_music_meta_box");
+
+function save_music_meta_box($post_id, $post, $update)
+{
+    if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
+        return $post_id;
+
+    if(!current_user_can("edit_post", $post_id))
+        return $post_id;
+
+    if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+        return $post_id;
+
+    $slug = "music";
+    if($slug != $post->post_type)
+        return $post_id;
+
+    $music_embed = "";
+    $music_link = "";
+
+    if(isset($_POST["music-embed"]))
+    {
+        $music_embed = $_POST["music-embed"];
+    }
+    update_post_meta($post_id, "music-embed", $music_embed);
+
+    if(isset($_POST["music-link"]))
+    {
+        $music_link = $_POST["music-link"];
+    }
+    update_post_meta($post_id, "music-link", $music_link);
+
+}
+
+add_action("save_post", "save_music_meta_box", 10, 3);
+
+function remove_music_field_meta_box()
+{
+    remove_meta_box("postcustom", "music", "normal");
+}
+
+add_action("do_meta_boxes", "remove_music_field_meta_box");
+
+
+
+// Videos Custom Post Type
+function create_post_type_videos()
+{
+    register_taxonomy_for_object_type('category', 'videos'); // Register Taxonomies for Category
+    register_taxonomy_for_object_type('post_tag', 'videos');
+    register_post_type('videos', // Register Custom Post Type
+        array(
+        'labels' => array(
+            'name' => __('Videos', 'videos'),
+            'singular_name' => __('Video', 'videos'),
+            'add_new' => __('Add Video', 'videos'),
+            'add_new_item' => __('Add New Video', 'videos'),
+            'edit' => __('Edit', 'videos'),
+            'edit_item' => __('Edit Video', 'videos'),
+            'new_item' => __('New Video', 'videos'),
+            'view' => __('View Videos', 'videos'),
+            'view_item' => __('View Video', 'videos'),
+            'search_items' => __('Search Videos', 'videos'),
+            'not_found' => __('No Videos found', 'videos'),
+            'not_found_in_trash' => __('No Videos found in Trash', 'videos')
+        ),
+        'public' => true,
+        'has_archive' => false,
+        'publicaly_queryable' => false,
+        'query_var' => false,
+        'hierarchical' => false,
+        'supports' => array(
+            'title',
+            'thumbnail'
+        ),
+        'can_export' => true, // Allows export in Tools > Export
+        'taxonomies' => array(
+            'post_tag',
+            'category'
+        ) // Add Category and Post Tags support
+    ));
+}
+
+
+function videos_meta_box_markup($object)
+{
+    wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+
+    ?>
+
+        <style>
+          .slow-jams-custom{
+          }
+          .slow-jams-custom label{
+            display: block;
+            width: 100%;
+          }
+          .slow-jams-custom input{
+            display: block;
+            max-width: 500px;
+            width: 100%;
+            padding: 8px 10px;
+            max-height: 50px;
+            border-radius: 3px;
+          }
+        </style>
+
+        <div class="slow-jams-custom">
+            <label for="video-embed">Video embed link:</label>
+            <input name="video-embed" type="text" placeholder="https://www.youtube.com/embed/fhYYdeAC3BI" value="<?php echo get_post_meta($object->ID, "video-embed", true); ?>">
+        </div>
+    <?php
+}
+
+function add_videos_meta_box()
+{
+    add_meta_box("videos-meta-box", "Video info", "videos_meta_box_markup", "videos", "normal", "high", "show_in_rest", null);
+}
+
+add_action("add_meta_boxes", "add_videos_meta_box");
+
+function save_videos_meta_box($post_id, $post, $update)
+{
+    if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
+        return $post_id;
+
+    if(!current_user_can("edit_post", $post_id))
+        return $post_id;
+
+    if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+        return $post_id;
+
+    $slug = "videos";
+    if($slug != $post->post_type)
+        return $post_id;
+
+    $video_embed = "";
+
+    if(isset($_POST["video-embed"]))
+    {
+        $video_embed = $_POST["video-embed"];
+    }
+    update_post_meta($post_id, "video-embed", $video_embed);
+
+}
+
+add_action("save_post", "save_videos_meta_box", 10, 3);
+
+function remove_videos_field_meta_box()
+{
+    remove_meta_box("postcustom", "videos", "normal");
+}
+
+add_action("do_meta_boxes", "remove_videos_field_meta_box");
+
 
 /*------------------------------------*\
 	ShortCode Functions
@@ -447,6 +837,46 @@ function html5_shortcode_demo($atts, $content = null)
 function html5_shortcode_demo_2($atts, $content = null) // Demo Heading H2 shortcode, allows for nesting within above element. Fully expandable.
 {
     return '<h2>' . $content . '</h2>';
+}
+
+
+/*-------------------------------------*\
+	Nav Walker to strip <li> from wp_nav_menu()
+\*------------------------------------*/
+
+class Nav_Footer_Walker extends Walker_Nav_Menu {
+	function start_lvl( &$output, $depth = 0, $args = array() ) {
+		$indent = str_repeat("\t", $depth);
+		$output .= "\n$indent\n";
+	}
+	function end_lvl( &$output, $depth = 0, $args = array() ) {
+		$indent = str_repeat("\t", $depth);
+		$output .= "$indent\n";
+	}
+	function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+		$indent = ( $depth ) ? str_repeat( "\t", $depth ) : '';
+		$class_names = $value = '';
+		$classes = empty( $item->classes ) ? array() : (array) $item->classes;
+		$classes[] = 'menu-item-' . $item->ID;
+		$class_names = join( ' ', apply_filters( 'nav_menu_css_class', array_filter( $classes ), $item, $args ) );
+		$class_names = $class_names ? ' class="' . esc_attr( $class_names ) . '"' : '';
+		$id = apply_filters( 'nav_menu_item_id', 'menu-item-'. $item->ID, $item, $args );
+		$id = $id ? ' id="' . esc_attr( $id ) . '"' : '';
+		$output .= $indent . '';
+		$attributes  = ! empty( $item->attr_title ) ? ' title="'  . esc_attr( $item->attr_title ) .'"' : '';
+		$attributes .= ! empty( $item->target )     ? ' target="' . esc_attr( $item->target     ) .'"' : '';
+		$attributes .= ! empty( $item->xfn )        ? ' rel="'    . esc_attr( $item->xfn        ) .'"' : '';
+		$attributes .= ! empty( $item->url )        ? ' href="'   . esc_attr( $item->url        ) .'"' : '';
+		$item_output = $args->before;
+		$item_output .= '<a '. $class_names .''. $attributes .'>';
+		$item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
+		$item_output .= '</a>';
+		$item_output .= $args->after;
+		$output .= apply_filters( 'walker_nav_menu_start_el', $item_output, $item, $depth, $args );
+	}
+	function end_el( &$output, $item, $depth = 0, $args = array() ) {
+		$output .= "\n";
+	}
 }
 
 ?>

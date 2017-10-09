@@ -347,6 +347,8 @@ add_action('wp_enqueue_scripts', 'html5blank_styles'); // Add Theme Stylesheet
 add_action('init', 'register_html5_menu'); // Add HTML5 Blank Menu
 add_action('init', 'create_post_type_banners'); // Add our Banners Post Type
 add_action('init', 'create_post_type_shows'); // Add our Shows Post Type
+add_action('init', 'create_post_type_music'); // Add our Music Post Type
+add_action('init', 'create_post_type_videos'); // Add our Videos Post Type
 add_action('widgets_init', 'my_remove_recent_comments_style'); // Remove inline Recent Comment Styles from wp_head()
 add_action('init', 'html5wp_pagination'); // Add our HTML5 Pagination
 
@@ -583,6 +585,244 @@ function remove_shows_field_meta_box()
 
 add_action("do_meta_boxes", "remove_shows_field_meta_box");
 
+
+
+
+// Music Custom Post Type
+function create_post_type_music()
+{
+    register_taxonomy_for_object_type('category', 'music'); // Register Taxonomies for Category
+    register_taxonomy_for_object_type('post_tag', 'music');
+    register_post_type('music', // Register Custom Post Type
+        array(
+        'labels' => array(
+            'name' => __('Music', 'music'),
+            'singular_name' => __('Music', 'music'),
+            'add_new' => __('Add Music', 'music'),
+            'add_new_item' => __('Add New Music', 'music'),
+            'edit' => __('Edit', 'music'),
+            'edit_item' => __('Edit Music', 'music'),
+            'new_item' => __('New Music', 'music'),
+            'view' => __('View Music', 'music'),
+            'view_item' => __('View Music', 'music'),
+            'search_items' => __('Search Music', 'music'),
+            'not_found' => __('No Music found', 'music'),
+            'not_found_in_trash' => __('No Music found in Trash', 'music')
+        ),
+        'public' => true,
+        'has_archive' => false,
+        'publicaly_queryable' => false,
+        'query_var' => false,
+        'hierarchical' => false,
+        'supports' => array(
+            'title',
+            'thumbnail'
+        ),
+        'can_export' => true, // Allows export in Tools > Export
+        'taxonomies' => array(
+            'post_tag',
+            'category'
+        ) // Add Category and Post Tags support
+    ));
+}
+
+
+function music_meta_box_markup($object)
+{
+    wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+
+    ?>
+
+        <style>
+          .slow-jams-custom{
+          }
+          .slow-jams-custom label{
+            display: block;
+            width: 100%;
+          }
+          .slow-jams-custom input{
+            display: block;
+            max-width: 500px;
+            width: 100%;
+            padding: 8px 10px;
+            max-height: 50px;
+            border-radius: 3px;
+          }
+        </style>
+
+        <div class="slow-jams-custom">
+            <label for="music-embed">Music embed link:</label>
+            <input name="music-embed" type="text" placeholder="https://bandcamp.com/EmbeddedPlayer ..." value="<?php echo get_post_meta($object->ID, "music-embed", true); ?>">
+
+            <br />
+
+            <label for="music-link">Music page link:</label>
+            <input name="music-link" type="text" placeholder="http://silencekitwpg.bandcamp.com/album/started-as-a-whisper" value="<?php echo get_post_meta($object->ID, "music-link", true); ?>">
+        </div>
+    <?php
+}
+
+function add_music_meta_box()
+{
+    add_meta_box("music-meta-box", "Music info", "music_meta_box_markup", "music", "normal", "high", "show_in_rest", null);
+}
+
+add_action("add_meta_boxes", "add_music_meta_box");
+
+function save_music_meta_box($post_id, $post, $update)
+{
+    if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
+        return $post_id;
+
+    if(!current_user_can("edit_post", $post_id))
+        return $post_id;
+
+    if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+        return $post_id;
+
+    $slug = "music";
+    if($slug != $post->post_type)
+        return $post_id;
+
+    $music_embed = "";
+    $music_link = "";
+
+    if(isset($_POST["music-embed"]))
+    {
+        $music_embed = $_POST["music-embed"];
+    }
+    update_post_meta($post_id, "music-embed", $music_embed);
+
+    if(isset($_POST["music-link"]))
+    {
+        $music_link = $_POST["music-link"];
+    }
+    update_post_meta($post_id, "music-link", $music_link);
+
+}
+
+add_action("save_post", "save_music_meta_box", 10, 3);
+
+function remove_music_field_meta_box()
+{
+    remove_meta_box("postcustom", "music", "normal");
+}
+
+add_action("do_meta_boxes", "remove_music_field_meta_box");
+
+
+
+// Videos Custom Post Type
+function create_post_type_videos()
+{
+    register_taxonomy_for_object_type('category', 'videos'); // Register Taxonomies for Category
+    register_taxonomy_for_object_type('post_tag', 'videos');
+    register_post_type('videos', // Register Custom Post Type
+        array(
+        'labels' => array(
+            'name' => __('Videos', 'videos'),
+            'singular_name' => __('Video', 'videos'),
+            'add_new' => __('Add Video', 'videos'),
+            'add_new_item' => __('Add New Video', 'videos'),
+            'edit' => __('Edit', 'videos'),
+            'edit_item' => __('Edit Video', 'videos'),
+            'new_item' => __('New Video', 'videos'),
+            'view' => __('View Videos', 'videos'),
+            'view_item' => __('View Video', 'videos'),
+            'search_items' => __('Search Videos', 'videos'),
+            'not_found' => __('No Videos found', 'videos'),
+            'not_found_in_trash' => __('No Videos found in Trash', 'videos')
+        ),
+        'public' => true,
+        'has_archive' => false,
+        'publicaly_queryable' => false,
+        'query_var' => false,
+        'hierarchical' => false,
+        'supports' => array(
+            'title',
+            'thumbnail'
+        ),
+        'can_export' => true, // Allows export in Tools > Export
+        'taxonomies' => array(
+            'post_tag',
+            'category'
+        ) // Add Category and Post Tags support
+    ));
+}
+
+
+function videos_meta_box_markup($object)
+{
+    wp_nonce_field(basename(__FILE__), "meta-box-nonce");
+
+    ?>
+
+        <style>
+          .slow-jams-custom{
+          }
+          .slow-jams-custom label{
+            display: block;
+            width: 100%;
+          }
+          .slow-jams-custom input{
+            display: block;
+            max-width: 500px;
+            width: 100%;
+            padding: 8px 10px;
+            max-height: 50px;
+            border-radius: 3px;
+          }
+        </style>
+
+        <div class="slow-jams-custom">
+            <label for="video-embed">Video embed link:</label>
+            <input name="video-embed" type="text" placeholder="https://www.youtube.com/embed/fhYYdeAC3BI" value="<?php echo get_post_meta($object->ID, "video-embed", true); ?>">
+        </div>
+    <?php
+}
+
+function add_videos_meta_box()
+{
+    add_meta_box("videos-meta-box", "Video info", "videos_meta_box_markup", "videos", "normal", "high", "show_in_rest", null);
+}
+
+add_action("add_meta_boxes", "add_videos_meta_box");
+
+function save_videos_meta_box($post_id, $post, $update)
+{
+    if (!isset($_POST["meta-box-nonce"]) || !wp_verify_nonce($_POST["meta-box-nonce"], basename(__FILE__)))
+        return $post_id;
+
+    if(!current_user_can("edit_post", $post_id))
+        return $post_id;
+
+    if(defined("DOING_AUTOSAVE") && DOING_AUTOSAVE)
+        return $post_id;
+
+    $slug = "videos";
+    if($slug != $post->post_type)
+        return $post_id;
+
+    $video_embed = "";
+
+    if(isset($_POST["video-embed"]))
+    {
+        $video_embed = $_POST["video-embed"];
+    }
+    update_post_meta($post_id, "video-embed", $video_embed);
+
+}
+
+add_action("save_post", "save_videos_meta_box", 10, 3);
+
+function remove_videos_field_meta_box()
+{
+    remove_meta_box("postcustom", "videos", "normal");
+}
+
+add_action("do_meta_boxes", "remove_videos_field_meta_box");
+
+
 /*------------------------------------*\
 	ShortCode Functions
 \*------------------------------------*/
@@ -638,8 +878,5 @@ class Nav_Footer_Walker extends Walker_Nav_Menu {
 		$output .= "\n";
 	}
 }
-
-
-
 
 ?>
