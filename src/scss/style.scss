@@ -245,13 +245,13 @@ h2{
 	text-align: center;
 	line-height: 10px;
 	font-size: 10px;
-	color: rgba(255,255,255,.15);
+	color: rgba(255,255,255,.25);
 
 	a{
-		color: rgba(255,255,255,.25);
+		color: rgba(255,255,255,.35);
 
 		&:hover{
-			color: rgba(255,255,255,.35);
+			color: rgba(255,255,255,.45);
 		}
 	}
 }
@@ -403,7 +403,7 @@ h2{
 		font-size: 2rem;
 		color: $off-white;
 		display: inline-block;
-		margin: 0 8px 8px;
+		margin: 0 8px 0px;
 	}
 
 	&__google{
