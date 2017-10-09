@@ -38,9 +38,11 @@
 		<?php
 			$args = array(
 				'post_type' => 'shows',
-				'orderby' => 'DESC',
+				'order' => 'ASC',
 			 	'posts_per_page' => 100
 			);
+
+
 
 			$loop = new WP_Query( $args );
 
@@ -72,22 +74,28 @@
 	<section id="music" class="music modal mfp-hide zoom-anim-dialog">
 		<h3>Music</h3>
 
-		<iframe style="border: 0; width: 100%; height: 120px;" src="https://bandcamp.com/EmbeddedPlayer/album=2497081197/size=large/bgcol=ffffff/linkcol=333333/tracklist=false/artwork=small/transparent=true/" seamless><a href="http://silencekitwpg.bandcamp.com/album/started-as-a-whisper">Started as a Whisper by Silence Kit</a></iframe>
-
 		<?php
-			// $args = array(
-			// 	'post_type' => 'music',
-			//  	'posts_per_page' => 100
-			// );
-			//
-			// $loop = new WP_Query( $args );
-			//
-			// while ( $loop->have_posts() ) : $loop->the_post();
-			//
-			// echo '<div class="music__indv"><h4>';
-			// the_title();
-			// echo '</h4></div>';
-			// endwhile;
+			$args = array(
+				'post_type' => 'music',
+			 	'posts_per_page' => 100
+			);
+
+			$loop = new WP_Query( $args );
+
+			while ( $loop->have_posts() ) : $loop->the_post();
+
+			$music_embed = get_post_meta( $post->ID, 'music-embed', true );
+			$music_link = get_post_meta( $post->ID, 'music-link', true );
+			$music_title = the_title();
+
+			echo '
+				<div class="music__indv">
+					<iframe style="border: 0; width: 100%; height: 120px;" src="'.$music_embed.' seamless>
+						<a href="'.$music_link.'">'.$music_title.' by Silence Kit</a>
+					</iframe>
+				</div>';
+
+			endwhile;
 		?>
 	</section>
 	<!-- /music -->
@@ -97,19 +105,21 @@
 		<h3>Video</h3>
 
 		<?php
-			// $args = array(
-			// 	'post_type' => 'music',
-			//  	'posts_per_page' => 100
-			// );
-			//
-			// $loop = new WP_Query( $args );
-			//
-			// while ( $loop->have_posts() ) : $loop->the_post();
-			//
-			// echo '<div class="music__indv"><h4>';
-			// the_title();
-			// echo '</h4></div>';
-			// endwhile;
+			$args = array(
+				'post_type' => 'videos',
+			 	'posts_per_page' => 1
+			);
+
+			$loop = new WP_Query( $args );
+
+			while ( $loop->have_posts() ) : $loop->the_post();
+
+			$video_embed = get_post_meta( $post->ID, 'video-embed', true );
+
+			echo '<div class="video__indv">
+							<iframe width="560" height="315" src="'.$video_embed.'" frameborder="0" allowfullscreen></iframe>
+						</div>';
+			endwhile;
 		?>
 	</section>
 	<!-- /video -->
