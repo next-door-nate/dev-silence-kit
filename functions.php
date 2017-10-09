@@ -497,23 +497,23 @@ function show_meta_box_markup($object)
         </style>
 
         <div class="slow-jams-custom">
-            <label for="shows-text-date">Show date:</label>
-            <input name="shows-text-date" type="text" placeholder="Aug 25, 2017" value="<?php echo get_post_meta($object->ID, "shows-text-date", true); ?>">
+            <label for="show-date">Show date:</label>
+            <input name="show-date" type="text" placeholder="Aug 25, 2017" value="<?php echo get_post_meta($object->ID, "show-date", true); ?>">
 
             <br/>
 
-            <label for="shows-text-venue">Show venue:</label>
-            <input name="shows-text-venue" type="text" placeholder="Goodwill Social Club or whatever..." value="<?php echo get_post_meta($object->ID, "shows-text-venue", true); ?>">
+            <label for="show-venue">Show venue:</label>
+            <input name="show-venue" type="text" placeholder="Goodwill Social Club or whatever..." value="<?php echo get_post_meta($object->ID, "show-venue", true); ?>">
 
             <br />
 
-            <label for="shows-text-city">Show city:</label>
-            <input name="shows-text-city" type="text" placeholder="Winnipeg, MB or New York, USA, or whatever..." value="<?php echo get_post_meta($object->ID, "shows-text-city", true); ?>">
+            <label for="show-city">Show city:</label>
+            <input name="show-city" type="text" placeholder="Winnipeg, MB or New York, USA, or whatever..." value="<?php echo get_post_meta($object->ID, "show-city", true); ?>">
 
             <br />
 
-            <label for="shows-text-link">Show link:</label>
-            <input name="shows-text-link" type="text" placeholder="Something like this --> https://slowjams.co" value="<?php echo get_post_meta($object->ID, "shows-text-link", true); ?>">
+            <label for="show-link">Show link:</label>
+            <input name="show-link" type="text" placeholder="Something like this --> https://slowjams.co" value="<?php echo get_post_meta($object->ID, "show-link", true); ?>">
 
 
         </div>
@@ -547,29 +547,29 @@ function save_show_meta_box($post_id, $post, $update)
     $show_city = "";
     $show_link = "";
 
-    if(isset($_POST["shows-text-date"]))
+    if(isset($_POST["show-date"]))
     {
-        $show_date = $_POST["shows-text-date"];
+        $show_date = $_POST["show-date"];
     }
-    update_post_meta($post_id, "shows-text-date", $show_date);
+    update_post_meta($post_id, "show-date", $show_date);
 
-    if(isset($_POST["shows-text-venue"]))
+    if(isset($_POST["show-venue"]))
     {
-        $show_venue = $_POST["shows-text-venue"];
+        $show_venue = $_POST["show-venue"];
     }
-    update_post_meta($post_id, "shows-text-venue", $show_venue);
+    update_post_meta($post_id, "show-venue", $show_venue);
 
-    if(isset($_POST["shows-text-city"]))
+    if(isset($_POST["show-city"]))
     {
-        $show_city = $_POST["shows-text-city"];
+        $show_city = $_POST["show-city"];
     }
-    update_post_meta($post_id, "shows-text-city", $show_city);
+    update_post_meta($post_id, "show-city", $show_city);
 
-    if(isset($_POST["shows-text-link"]))
+    if(isset($_POST["show-link"]))
     {
-        $show_link = $_POST["shows-text-link"];
+        $show_link = $_POST["show-link"];
     }
-    update_post_meta($post_id, "shows-text-link", $show_link);
+    update_post_meta($post_id, "show-link", $show_link);
 
 
 }
