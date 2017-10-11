@@ -21,16 +21,6 @@
 		<script src="https://use.fontawesome.com/670b7fd49d.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
 
-
-		<script>
-        // conditionizr.com
-        // configure environment tests
-        // conditionizr.config({
-        //     assets: '<?php echo get_template_directory_uri(); ?>',
-        //     tests: {}
-        // });
-        </script>
-
 	</head>
 	<body <?php body_class(); ?>>
 
@@ -39,14 +29,6 @@
 
 			<!-- header -->
 			<header class="header clear" role="banner">
-
-					<!-- logo
-					<div class="logo">
-						<a href="<?php echo home_url(); ?>">
-							<img src="<?php echo get_template_directory_uri(); ?>/img/logo.svg" alt="Logo" class="logo-img">
-						</a>
-					</div>
-					/logo -->
 
 					<!-- nav -->
 					<nav class="nav" role="navigation">
@@ -60,7 +42,6 @@
 
 							echo wp_nav_menu( $menuParameters );
 
-							//echo strip_tags(wp_nav_menu( $menuParameters ), '<a><nav>' );
 						?>
 
 					</nav>
