@@ -421,7 +421,7 @@ function create_post_type_banners()
         ),
         'public' => true,
         'has_archive' => false,
-        'publicaly_queryable' => false,
+        'publicly_queryable' => false,
         'exclude_from_search' => true,
         'query_var' => false,
         'hierarchical' => false, // Allows your posts to behave like Hierarchy Pages
@@ -460,7 +460,7 @@ function create_post_type_shows()
         ),
         'public' => true,
         'has_archive' => false,
-        'publicaly_queryable' => false,
+        'publicly_queryable' => false,
         'query_var' => false,
         'hierarchical' => false,
         'supports' => array(
@@ -611,7 +611,7 @@ function create_post_type_music()
         ),
         'public' => true,
         'has_archive' => false,
-        'publicaly_queryable' => false,
+        'publicly_queryable' => false,
         'query_var' => false,
         'hierarchical' => false,
         'supports' => array(
@@ -735,7 +735,7 @@ function create_post_type_videos()
         ),
         'public' => true,
         'has_archive' => false,
-        'publicaly_queryable' => false,
+        'publicly_queryable' => false,
         'query_var' => false,
         'hierarchical' => false,
         'supports' => array(
