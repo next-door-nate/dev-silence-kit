@@ -35,7 +35,7 @@
 E=i.getElementsByTagName(e)[0];c.src=n;E.parentNode.insertBefore(c,E)}
 (window,document,'ga','script','//www.google-analytics.com/analytics.js');
 
-ga('create', 'UA-29923838-10', 'auto');
+ga('create', 'UA-107931141-1', 'auto');
 ga('send', 'pageview');
 </script>
 
