@@ -129,7 +129,6 @@ gulp.task('build', ['php', 'css', 'js']);
 //   }
 // });
 
-
 // watch for file changes
 gulp.task('watch', () => {
 

@@ -12,19 +12,19 @@
 
 
 		// Slick Slider for Banner faaaaaaaaade :herb: :smoking:
-		$('.banner').slick({
-			dots: false,
-			autoplay: true,
-			arrows: false,
-		  infinite: true,
-			autoplaySpeed: 10000,
-		  speed: 7000,
-			pauseOnFocus: false,
-			pauseOnHover: false,
-			draggable: false,
-		  fade: true,
-		  cssEase: 'linear'
-		});
+		// $('.banner').slick({
+		// 	dots: false,
+		// 	autoplay: true,
+		// 	arrows: false,
+		//   infinite: true,
+		// 	autoplaySpeed: 10000,
+		//   speed: 7000,
+		// 	pauseOnFocus: false,
+		// 	pauseOnHover: false,
+		// 	draggable: false,
+		//   fade: true,
+		//   cssEase: 'linear'
+		// });
 
 
 		// Shows modal via MagnificPopup :ok_hand:
